@@ -1,6 +1,8 @@
 # django-scheduler sample project
 
-in this sample project, i already used fullcalendar vue with default **initialView** : listWeek, **plugins** : dayGridPlugin, interactionPlugin, listPlugin.
+in this sample project, i already used fullcalendar vue with default 
+- **initialView** : listWeek
+- **plugins** : dayGridPlugin, interactionPlugin, listPlugin.
 
 i fork the django-scheduler repo and create abstract calendar and event models so you can extend the model and add your custom field with it.
 
@@ -30,7 +32,7 @@ yarn install
 yarn run serve
 ```
 
-both will run on port **8000** and **8080**
+django will run on port **8000** and frontend will run on port **8080**
 ```
 http://localhost:8000
 http://localhost:8080
