@@ -1,15 +1,13 @@
 <template>
   <div class="row">
-    <div class="col-md-4">
-      <img alt="Vue logo" src="./assets/logo.png" />
-      <h1>Phrases from Django API:</h1>
-      <button type="button" @click="fetchPhrases('all')">Show All Callendar</button>
-
-      <button type="button" @click="fetchPhrases('calendar-1')">Calendar 1</button>
-
-      <button type="button" @click="fetchPhrases('calendar-2')">Calendar 2</button>
+    <div class="col-md-4 mt-5">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item" v-for="(calendar, index) in listCalendar" v-bind:key="index">
+          <a type="button" @click="fetchPhrases(calendar.slug)">{{ calendar.name }}</a>
+        </li>
+      </ul>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-8 mt-5">
       <div id="app">
         <FullCalendar :options="calendarOptions" />
       </div>
@@ -37,6 +35,7 @@ export default {
         },
         dayMaxEvents: true,
         plugins: [dayGridPlugin, interactionPlugin, listPlugin],
+        height: '757px',
         initialView: "listWeek",
         events: [],
         views: {
@@ -44,7 +43,11 @@ export default {
           listWeek: { buttonText: "list week" },
         },
       },
+      listCalendar: []
     };
+  },
+  created() {
+    this.fetchCalendars();
   },
   methods: {
     async fetchPhrases(calendar_slug) {
@@ -58,6 +61,13 @@ export default {
       const response = await this.$http.get(get_url);
       this.calendarOptions.events = response.body;
     },
+    async fetchCalendars() {
+      let url = 'api/calendars/';
+      const response = await this.$http.get(url);
+      this.listCalendar = response.body;
+      console.log(this.listCalendar)
+      console.log(response)
+    },
   },
 };
 </script>
@@ -69,6 +79,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
