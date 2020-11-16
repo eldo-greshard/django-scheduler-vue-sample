@@ -21,7 +21,8 @@ from schedule.views import (
     api_occurrences,
     api_select_create,
     index,
-    simple_api_view
+    simple_api_view,
+    api_get_all_calendar
 )
 
 urlpatterns = [
@@ -144,4 +145,5 @@ urlpatterns = [
     url(r"^$", ListView.as_view(queryset=Calendar.objects.all()), name="schedule"),
     url(r"vue/", index, name="index"),
     url(r"^api/phrases/", simple_api_view, name='phrases'),
+    url(r"^api/calendars/", api_get_all_calendar, name='api_get_all_calendar')
 ]

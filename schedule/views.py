@@ -1,5 +1,6 @@
+from django.core import serializers
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 import datetime
 from urllib.parse import quote
 
@@ -543,3 +544,13 @@ def simple_api_view(request):
         ]
     })
     return response
+
+def api_get_all_calendar(request):
+    all_calendar = {
+        "name": "All Calendar Events",
+        "slug": "all"
+    }
+    qs = Calendar.objects.all().values('name', 'slug')
+    qs_list = list(qs)
+    qs_list.insert(0, all_calendar)
+    return JsonResponse(qs_list,safe=False)
